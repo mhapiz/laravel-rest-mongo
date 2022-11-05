@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\CarController;
+use App\Http\Controllers\Api\MotorcycleController;
+use App\Http\Controllers\Api\VehicleController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,4 +28,32 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
+});
+
+Route::middleware('auth:api')->group(function () {
+
+    Route::controller(VehicleController::class)
+        ->prefix('vehicle')
+        ->group(function () {
+            Route::post('store', 'store');
+            Route::put('update/{id}', 'update');
+            Route::delete('destroy/{id}', 'destroy');
+
+
+            Route::controller(CarController::class)
+                ->prefix('car')
+                ->group(function () {
+                    Route::post('store', 'store');
+                    Route::put('update/{id}', 'update');
+                    Route::delete('destroy/{id}', 'destroy');
+                });
+
+            Route::controller(MotorcycleController::class)
+                ->prefix('motorcycle')
+                ->group(function () {
+                    Route::post('store', 'store');
+                    Route::put('update/{id}', 'update');
+                    Route::delete('destroy/{id}', 'destroy');
+                });
+        });
 });
