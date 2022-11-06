@@ -14,6 +14,16 @@ class MotorcycleController extends Controller
         $this->motorcycleService = $motorcycleService;
     }
 
+    public function index()
+    {
+        return $this->motorcycleService->getAllMotorcycle();
+    }
+
+    public function find($id)
+    {
+        return $this->motorcycleService->getMotorcycleById($id);
+    }
+
     public function store(Request $request)
     {
         $data = $request->all();

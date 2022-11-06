@@ -15,6 +15,46 @@ class MotorcycleServiceImplement implements MotorcycleService
         $this->motorcycleRepository = $motorcycleRepository;
     }
 
+    public function getAllMotorcycle()
+    {
+        $result = ['status' => 200];
+        try {
+            $result['message'] = 'Successfully get all motorcycle';
+            $result['data'] = $this->motorcycleRepository->getAllMotorcycle();
+        } catch (Exception $e) {
+            $result['message'] = 'Failed to get all motorcycle';
+            $result = [
+                'status' => 404,
+                'error' => $e->getMessage(),
+            ];
+        }
+
+        return $result;
+    }
+
+    public function getMotorcycleById($id)
+    {
+        $result = ['status' => 200];
+        try {
+            $check = $this->motorcycleRepository->findSingleMotorcycle($id);
+            if ($check) {
+                $result['message'] = 'Successfully get motorcycle';
+                $result['data'] = $this->motorcycleRepository->findSingleMotorcycle($id);
+            } else {
+                $result = ['status' => 404];
+                $result['message'] = 'Motorcycle not found';
+            }
+        } catch (Exception $e) {
+            $result['message'] = 'Failed to get all motorcycle';
+            $result = [
+                'status' => 404,
+                'error' => $e->getMessage(),
+            ];
+        }
+
+        return $result;
+    }
+
     public function storeMotorcycle(array $data)
     {
         $req = Validator::make($data, [

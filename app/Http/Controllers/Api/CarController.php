@@ -16,6 +16,16 @@ class CarController extends Controller
         $this->carService = $carService;
     }
 
+    public function index()
+    {
+        return $this->carService->getAllCar();
+    }
+
+    public function find($id)
+    {
+        return $this->carService->getCarById($id);
+    }
+
     public function store(Request $request)
     {
         $data = $request->all();

@@ -15,4 +15,9 @@ class Car extends Model
         'tipe',
         'vehicle_id',
     ];
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id', '_id');
+    }
 }

@@ -12,6 +12,11 @@ class MotorcycleRepositoryImplement implements MotorcycleRepository
         $this->model = $model;
     }
 
+    public function getAllMotorcycle()
+    {
+        return $this->model->with('vehicle')->get();
+    }
+
     public function storeMotorcycle(array $data)
     {
         $data = $this->model->create([

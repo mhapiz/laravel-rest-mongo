@@ -12,6 +12,11 @@ class VehicleRepositoryImplement implements VehicleRepository
         $this->model = $model;
     }
 
+    public function getAllVehicle()
+    {
+        return $this->model->with(['car', 'motorcycle'])->get();
+    }
+
     public function storeVehicle(array $data)
     {
         $data = $this->model->create([
@@ -38,7 +43,7 @@ class VehicleRepositoryImplement implements VehicleRepository
 
     public function findSingleVehicle($id)
     {
-        return $this->model->find($id);
+        return $this->model->with(['car', 'motorcycle'])->find($id);
     }
 
     public function destroyVehicle($id)

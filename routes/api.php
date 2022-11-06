@@ -35,6 +35,8 @@ Route::middleware('auth:api')->group(function () {
     Route::controller(VehicleController::class)
         ->prefix('vehicle')
         ->group(function () {
+            Route::get('get-all', 'index');
+            Route::get('find/{id}', 'find');
             Route::post('store', 'store');
             Route::put('update/{id}', 'update');
             Route::delete('destroy/{id}', 'destroy');
@@ -43,6 +45,8 @@ Route::middleware('auth:api')->group(function () {
             Route::controller(CarController::class)
                 ->prefix('car')
                 ->group(function () {
+                    Route::get('get-all', 'index');
+                    Route::get('find/{id}', 'find');
                     Route::post('store', 'store');
                     Route::put('update/{id}', 'update');
                     Route::delete('destroy/{id}', 'destroy');
@@ -51,9 +55,20 @@ Route::middleware('auth:api')->group(function () {
             Route::controller(MotorcycleController::class)
                 ->prefix('motorcycle')
                 ->group(function () {
+                    Route::get('get-all', 'index');
+                    Route::get('find/{id}', 'find');
                     Route::post('store', 'store');
                     Route::put('update/{id}', 'update');
                     Route::delete('destroy/{id}', 'destroy');
                 });
         });
+
+    Route::prefix('sales')->group(function () {
+
+        Route::get('/get-stock', [VehicleController::class, 'index']);
+
+        Route::get('/get-cars', [CarController::class, 'index']);
+
+        Route::get('/get-motorcycles', [MotorcycleController::class, 'index']);
+    });
 });

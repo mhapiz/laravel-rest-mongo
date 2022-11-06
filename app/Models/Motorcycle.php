@@ -15,4 +15,9 @@ class Motorcycle extends Model
         'tipe_transmisi',
         'vehicle_id',
     ];
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id', '_id');
+    }
 }

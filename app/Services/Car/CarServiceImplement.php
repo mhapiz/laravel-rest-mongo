@@ -15,6 +15,46 @@ class CarServiceImplement implements CarService
         $this->carRepository = $carRepository;
     }
 
+    public function getAllCar()
+    {
+        $result = ['status' => 200];
+        try {
+            $result['message'] = 'Successfully get all car';
+            $result['data'] = $this->carRepository->getAllCar();
+        } catch (Exception $e) {
+            $result['message'] = 'Failed to get all car';
+            $result = [
+                'status' => 404,
+                'error' => $e->getMessage(),
+            ];
+        }
+
+        return $result;
+    }
+
+    public function getCarById($id)
+    {
+        $result = ['status' => 200];
+        try {
+            $check = $this->carRepository->findSingleCar($id);
+            if ($check) {
+                $result['message'] = 'Successfully get car';
+                $result['data'] = $this->carRepository->findSingleCar($id);
+            } else {
+                $result = ['status' => 404];
+                $result['message'] = 'car not found';
+            }
+        } catch (Exception $e) {
+            $result['message'] = 'Failed to get all car';
+            $result = [
+                'status' => 404,
+                'error' => $e->getMessage(),
+            ];
+        }
+
+        return $result;
+    }
+
     public function storeCar(array $data)
     {
         $req = Validator::make($data, [

@@ -12,6 +12,11 @@ class CarRepositoryImplement implements CarRepository
         $this->model = $model;
     }
 
+    public function getAllCar()
+    {
+        return $this->model->with('vehicle')->get();
+    }
+
     public function storeCar(array $data)
     {
         $data = $this->model->create([

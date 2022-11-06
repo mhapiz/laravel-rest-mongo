@@ -15,4 +15,14 @@ class Vehicle extends Model
         'warna',
         'harga',
     ];
+
+    public function car()
+    {
+        return $this->hasMany(Car::class, 'vehicle_id', '_id');
+    }
+
+    public function motorcycle()
+    {
+        return $this->hasMany(Motorcycle::class, 'vehicle_id', '_id');
+    }
 }

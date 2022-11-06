@@ -14,6 +14,16 @@ class VehicleController extends Controller
         $this->vehicleService = $vehicleService;
     }
 
+    public function index()
+    {
+        return $this->vehicleService->getAllVehicle();
+    }
+
+    public function find($id)
+    {
+        return $this->vehicleService->getVehicleById($id);
+    }
+
     public function store(Request $request)
     {
         $data = $request->all();

@@ -15,6 +15,46 @@ class VehicleServiceImplement implements VehicleService
         $this->vehicleRepository = $vehicleRepository;
     }
 
+    public function getAllVehicle()
+    {
+        $result = ['status' => 200];
+        try {
+            $result['message'] = 'Successfully get all vehicle';
+            $result['data'] = $this->vehicleRepository->getAllVehicle();
+        } catch (Exception $e) {
+            $result['message'] = 'Failed to get all vehicle';
+            $result = [
+                'status' => 404,
+                'error' => $e->getMessage(),
+            ];
+        }
+
+        return $result;
+    }
+
+    public function getVehicleById($id)
+    {
+        $result = ['status' => 200];
+        try {
+            $check = $this->vehicleRepository->findSingleVehicle($id);
+            if ($check) {
+                $result['message'] = 'Successfully get vehicle';
+                $result['data'] = $this->vehicleRepository->findSingleVehicle($id);
+            } else {
+                $result = ['status' => 404];
+                $result['message'] = 'Vehicle not found';
+            }
+        } catch (Exception $e) {
+            $result['message'] = 'Failed to get all vehicle';
+            $result = [
+                'status' => 404,
+                'error' => $e->getMessage(),
+            ];
+        }
+
+        return $result;
+    }
+
     public function storeVehicle(array $data)
     {
         $req = Validator::make($data, [
