@@ -3,83 +3,39 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Motorcycle;
+use App\Services\Motorcycle\MotorcycleService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class MotorcycleController extends Controller
 {
+    private $motorcycleService;
+    public function __construct(MotorcycleService $motorcycleService)
+    {
+        $this->motorcycleService = $motorcycleService;
+    }
+
     public function store(Request $request)
     {
-        $req = Validator::make($request->all(), [
-            'mesin' => 'required',
-            'tipe_suspensi' => 'required',
-            'tipe_transmisi' => 'required',
-            'vehicle_id' => 'required|exists:vehicles,_id',
-        ]);
+        $data = $request->all();
 
-        if ($req->fails()) {
-            return  response()->json([
-                'status' => 'error',
-                'errors' => $req->errors(),
-            ], 422);
-        }
+        $result = $this->motorcycleService->storeMotorcycle($data);
 
-        $data = Motorcycle::create([
-            'mesin' => $request->mesin,
-            'tipe_suspensi' => $request->tipe_suspensi,
-            'tipe_transmisi' => $request->tipe_transmisi,
-            'vehicle_id' => $request->vehicle_id,
-        ]);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Motorcycle created successfully',
-            'data' => $data,
-        ], 201);
+        return response()->json($result, $result['status']);
     }
 
     public function update($id, Request $request)
     {
-        $data = Motorcycle::find($id);
+        $data = $request->all();
 
-        $req = Validator::make($request->all(), [
-            'mesin' => 'required',
-            'tipe_suspensi' => 'required',
-            'tipe_transmisi' => 'required',
-            'vehicle_id' => 'required',
-        ]);
+        $result = $this->motorcycleService->updateMotorcycle($id, $data);
 
-        if ($req->fails()) {
-            return  response()->json([
-                'status' => 'error',
-                'errors' => $req->errors(),
-            ], 422);
-        }
-
-        $data->update([
-            'mesin' => $request->mesin,
-            'tipe_suspensi' => $request->tipe_suspensi,
-            'tipe_transmisi' => $request->tipe_transmisi,
-            'vehicle_id' => $request->vehicle_id,
-        ]);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Motorcycle updated successfully',
-            'data' => $data,
-        ], 200);
+        return response()->json($result, $result['status']);
     }
 
     public function destroy($id)
     {
-        $data = Motorcycle::find($id);
-        $data->delete();
+        $result = $this->motorcycleService->destroyMotorcycle($id);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Motorcycle deleted successfully',
-            'data' => $data,
-        ]);
+        return response()->json($result, $result['status']);
     }
 }
