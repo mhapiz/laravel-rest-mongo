@@ -6,64 +6,62 @@ use Tests\TestCase;
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-class VehicleTest extends TestCase
+class CarTest extends TestCase
 {
     use WithoutMiddleware;
-    /**
-     * A basic unit test example.
-     *
-     * @return void
-     */
+
     public function testGetAll()
     {
         // $this->assertTrue(true);
         $this
-            ->get(route('api.vehicle.index'))
+            ->get(route('api.car.index'))
             ->assertStatus(200);
     }
 
     public function testGetSingle()
     {
-        $id = '636905a7860c00005c001b4e';
+        $id = '63690378860c00005c001b49';
 
         $this
-            ->get(route('api.vehicle.find', $id))
+            ->get(route('api.car.find', $id))
             ->assertStatus(200);
     }
 
     public function testStore()
     {
         $value = [
-            'tahun_kendaraan' => '1892',
-            'warna' => 'Jingga',
-            'harga' => '1500',
+            'mesin' => 'okesip',
+            'kapasitas_penumpang' => '1',
+            'tipe' => 'xpopo',
+            'vehicle_id' => '63690331860c00005c001b48',
         ];
 
         $this
-            ->post(route('api.vehicle.store'), $value)
+            ->post(route('api.car.store'), $value)
             ->assertStatus(201);
     }
 
     public function testUpdate()
     {
-        $id = '636905a7860c00005c001b4e';
+        $id = '63690378860c00005c001b49';
         $value = [
-            'tahun_kendaraan' => '1234',
-            'warna' => 'RGB',
-            'harga' => '99000',
+            'mesin' => 'okesip',
+            'kapasitas_penumpang' => '1',
+            'tipe' => '1500',
+            'vehicle_id' => '63690331860c00005c001b48',
             '_method' => 'PUT',
         ];
 
         $this
-            ->post(route('api.vehicle.update', $id), $value)
+            ->post(route('api.car.update', $id), $value)
             ->assertStatus(200);
     }
 
     public function testDestroy()
     {
-        $id = '636907d5d37d00009f002db4';
+        $id = '636907d4d37d00009f002db2';
         $this
-            ->delete(route('api.vehicle.destroy', $id))
+            ->delete(route('api.car.destroy', $id))
             ->assertStatus(200);
     }
 }

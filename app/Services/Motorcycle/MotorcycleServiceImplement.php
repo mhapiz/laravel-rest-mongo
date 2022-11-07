@@ -71,7 +71,7 @@ class MotorcycleServiceImplement implements MotorcycleService
             return $result;
         }
 
-        $result = ['status' => 200];
+        $result = ['status' => 201];
 
         try {
             $result['message'] = 'Successfully created Motorcycle';

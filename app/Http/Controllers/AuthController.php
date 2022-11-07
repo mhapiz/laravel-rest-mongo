@@ -38,7 +38,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Successfully logged out',
-        ]);
+        ], 200);
     }
 
     public function refresh()
@@ -48,6 +48,6 @@ class AuthController extends Controller
             'user' => Auth::user(),
             'token' => Auth::refresh(),
             'tokenType' => 'bearer',
-        ]);
+        ], 200);
     }
 }

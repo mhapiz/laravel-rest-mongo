@@ -71,7 +71,7 @@ class CarServiceImplement implements CarService
             return $result;
         }
 
-        $result = ['status' => 200];
+        $result = ['status' => 201];
 
         try {
             $result['message'] = 'Successfully created Car';
@@ -106,7 +106,6 @@ class CarServiceImplement implements CarService
         $result = ['status' => 200];
 
         try {
-
             $check = $this->carRepository->findSingleCar($id);
             if ($check) {
                 $result['message'] = 'Successfully updated Car';
